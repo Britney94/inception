@@ -1,0 +1,31 @@
+version: '3'
+services:
+        mariadb:
+                build:  ./mariadb
+                volumes:
+                        - db_data:/var/lib/mariadb
+                restart: always
+                environment:   
+                        USER1:  shogun
+                        USER2:  guuji
+                        PASSWORD: yasskween
+                        ROOT_PASSWORD: slay
+
+
+
+        wordpress:
+                depends_on:
+                        - mariadb
+                build: ./wordpress
+                ports:
+                        - "8000:80"
+                restart: always
+                environment:
+                        DB_HOST: db:3305
+                        DB_USER: wordpress
+                        DB_PASSWORD: yasskween
+                        DB_NAME: Pouette
+
+volumes:
+        db_data: {}
+
