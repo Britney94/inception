@@ -2,14 +2,16 @@ version: '3'
 services:
         mariadb:
                 build:  ./mariadb
+                ports:
+                  - '3306'
                 volumes:
-                        - db_data:/var/lib/mariadb
+                        - db_data:/home/user42/data
                 restart: always
                 environment:   
-                        USER1:  shogun
-                        USER2:  guuji
-                        PASSWORD: yasskween
-                        ROOT_PASSWORD: slay
+                - MYSQL_ROOT_PASSWORD: slay2
+                - MYSQL_USER:  kween
+                - MYSQL_PASSWORD: slay1
+                - INSTALL_SAKILA=1
 
 
 
@@ -18,14 +20,20 @@ services:
                         - mariadb
                 build: ./wordpress
                 ports:
-                        - "8000:80"
+                  - "8080:8080"
                 restart: always
                 environment:
                         DB_HOST: db:3305
                         DB_USER: wordpress
                         DB_PASSWORD: yasskween
                         DB_NAME: Pouette
-
+        nginx:
+                build:  ./nginx
+                ports:
+                  - '8000:443'
+                restart: always
+networks:
+        
 volumes:
         db_data: {}
 

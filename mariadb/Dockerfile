@@ -1,9 +1,14 @@
-FROM 	mariadb:latest
+FROM 	alpine:3.16
 
-COPY 	. /pouette
+RUN	apt-get update
+RUN	apt-get install -y mariadb-server
 
-#RUN	apt-get install -y git
+VOLUME /etc/lib/mysql
 
-CMD 	make
+EXPOSE	3306
 
-EXPOSE	80
+LABEL	version="1.0"
+
+#COPY 	. /pouette
+
+CMD 	["mysqld"]
