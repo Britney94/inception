@@ -1,14 +1,10 @@
 FROM 	alpine:3.16
 
-RUN	apt-get update
-RUN	apt-get install -y mariadb-server
+RUN	apk update && apk add  mariadb \
+	mariadb-client
 
-VOLUME /etc/lib/mysql
+VOLUME /home/data/volume_mariadb
 
 EXPOSE	3306
-
-LABEL	version="1.0"
-
-#COPY 	. /pouette
 
 CMD 	["mysqld"]
