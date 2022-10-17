@@ -5,8 +5,14 @@ services:
     ports:
      - "3306"
     volumes:
+    env_file: .env
      - "/home/user42/volumes"
     restart: always
+
+
+      #-------------------------------------#
+
+
   wordpress:
     depends_on:
      - mariadb
@@ -16,16 +22,27 @@ services:
     volumes:
      - "/home/user42/volumes"
     restart: always
+    env_file: .env
+
+
+      #-------------------------------------#
+
+
   nginx:
     build:  ./nginx
     ports:
      - "443:443"
      - "80:80"
     restart: unless-stopped
+    env_file: .env
     volumes:
      - "/home/user42/volumes"
     depends_on:
      - wordpress
+
+
+      #-------------------------------------#
+
 
 networks:
   first:
