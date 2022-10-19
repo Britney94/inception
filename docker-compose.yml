@@ -1,12 +1,12 @@
-version: '3'
+version: '3.5'
 services:
   mariadb:
     build:  ./mariadb
     ports:
      - "3306"
     volumes:
-    env_file: .env
      - "/home/user42/volumes"
+    env_file: .env
     restart: always
 
 
