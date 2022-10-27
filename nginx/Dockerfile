@@ -10,6 +10,10 @@ EXPOSE	443
 
 
 RUN	mkdir -p /run/nginx
+RUN	mkdir /etc/nginx/ssl
+RUN 	chown -R root:root /etc/nginx/ssl
+RUN 	chmod -R 600 /etc/nginx/ssl
+
 COPY	./conf/default.conf /etc/nginx/conf.d/default.conf
 #COPY	./conf/nginx.conf /etc/nginx/nginx.conf
 

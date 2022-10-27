@@ -13,14 +13,14 @@ RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 EXPOSE	9000	
 
-COPY	wp.conf /etc/php7/php-fpm.d/www.conf
+COPY	wp-config.conf /etc/php7/php-fpm.d/www.conf
 
 #RUN	mkdir 		-p /var/www/html
 #RUN	adduser 	-u 82 -D -S -G www-data www-data
 #RUN	chmod 777 	-R /var/www/html
 #RUN	chown 		-R www-data:www-data /var/www/html
 
-COPY	./wp.php	./
+COPY	./wp.php 	./
 COPY	./cmd.sh	./
 RUN	chmod +x cmd.sh
 
