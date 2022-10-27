@@ -1,10 +1,15 @@
-FROM 	alpine:3.16
+#FROM 	alpine:3.16
+FROM 	debian:buster-slim
 
-RUN	apk update && apk add curl
-RUN	apk update && apk add wget
-RUN	apk update && apk add php-fpm
+#RUN	apk update && apk add curl
+#RUN	apk update && apk add wget
+#RUN	apk update && apk add php-fpm
+#RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+RUN	apt-get update && apt-get install -y curl
+RUN	apt-get update && apt-get install -y wget
+RUN	apt-get update && apt-get install -y php-fpm
 RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-
 
 EXPOSE	9000	
 
