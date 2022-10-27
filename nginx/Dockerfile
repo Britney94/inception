@@ -10,6 +10,7 @@ EXPOSE	443
 
 
 RUN	mkdir -p /run/nginx
-COPY	./conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY	./conf/default.conf /etc/nginx/conf.d/default.conf
+#COPY	./conf/nginx.conf /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]
