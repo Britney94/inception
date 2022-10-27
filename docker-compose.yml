@@ -42,16 +42,18 @@ services:
     ports:
      - "443:443"
     restart: unless-stopped
+    tty: true
     env_file: ./.env
     volumes:
      - "/home/user42/volumes"
     depends_on:
-     - wordpress
+     - mariadb
 
       #-------------------------------------#
 
 networks:
   zeibel:
+    external: true
     name: zeibel
     driver: bridge
         
