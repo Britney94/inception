@@ -1,11 +1,11 @@
 
 <?php
-	define("DB_NAME",				getenv("MARIADB_DATABASE"));
-	define("DB_USER",				getenv("MARIADB_USER"));
-	define("DB_PASSWORD",			getenv("MARIADB_PASSWORD"));
-	define("DB_HOST",				getenv("WORDPRESS_MARIADB_HOST") . ":3306");
-	define("DB_CHARSET",			getenv("MARIADB_CHARSET"));
-	define("DB_COLLATE",			getenv("MARIADB_COLLATE"));
+	define("MARIADB_NAME",				getenv("MARIADB_DATABASE"));
+	define("MARIADB_USER",				getenv("MARIADB_USER"));
+	define("MARIADB_PASSWORD",			getenv("MARIADB_PASSWORD"));
+	define("MARIADB_HOST",				getenv("WORDPRESS_MARIADB_HOST") . ":3306");
+	define("MARIADB_CHARSET",			getenv("MARIADB_CHARSET"));
+	define("MARIADB_COLLATE",			getenv("MARIADB_COLLATE"));
 
 	define('AUTH_KEY',				'2>#Zc9]> ChGj2`rJX++n{ /~Jc)ha^j1:EX(n_oj&.jMbSy--5qpPcUX9bs$F_I');
 	define('SECURE_AUTH_KEY',		'PN/_MlG:%[*`cgsWc!VnkU6&^K$A6$%+|sGrBf9F)SRmq]^-[$#Roi#-#ir.;;/Z');
