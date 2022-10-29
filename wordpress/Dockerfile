@@ -7,15 +7,15 @@ FROM 	debian:buster-slim
 #RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 RUN	apt-get update && apt-get install -y curl
+RUN	apt-get update && apt-get install -y sendmail
 RUN	apt-get update && apt-get install -y wget
 RUN	apt-get update && apt-get install -y php-fpm
 RUN	apt-get update && apt-get install -y php-mysqli
-RUN	apt-get update && apt-get install -y php7.0
+RUN	apt-get update && apt-get install -y php7.3
 RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 EXPOSE	9000	
 
-COPY	wp-config.conf /etc/php7/php-fpm.d/www.conf
 
 RUN	mkdir 		-p /var/www/html
 RUN	chown 		-R $USER:$USER /var/www/
@@ -25,8 +25,15 @@ RUN	chown 		-R $USER:$USER /var/www/html
 #RUN	chmod 777 	-R /var/www/html
 #RUN	chown 		-R www-data:www-data /var/www/html
 
-COPY	./wp-config.php 	./
-COPY	./cmd.sh		./
-RUN	chmod +x cmd.sh
+COPY		./conf/www.conf /etc/php/7.3/fpm/pool.d
+COPY		./tools /var/www/
+#COPY	./wp-config.php 	./
+#COPY	./cmd.sh		./
+#COPY	./alt.sh		./
+#RUN	chmod +x cmd.sh
+RUN	chmod +x alt.sh
 
-ENTRYPOINT	["./cmd.sh"]
+ENTRYPOINT	["./alt.sh"]
+#ENTRYPOINT	["./cmd.sh"]
+
+CMD		["/usr/sbin/php-fpm7.3", "--nodaemonize"]
