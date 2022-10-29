@@ -1,0 +1,10 @@
+https://doc.ubuntu-fr.org/nginx
+https://make.wordpress.org/cli/handbook/references/config/
+https://docs.docker.com/develop/develop-images/dockerfile_best-practices/
+https://www.axopen.com/blog/2021/03/docker-tuto-deployer-conteneurs/
+https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211677-creez-un-fichier-docker-compose-pour-orchestrer-vos-conteneurs
+
+
+https://medium.com/swlh/wordpress-deployment-with-nginx-php-fpm-and-mariadb-using-docker-compose-55f59e5c1a
+https://github.com/nginx-proxy/nginx-proxy/issues/839
+https://stackoverflow.com/questions/55522620/docker-compose-yml-container-name-and-hostname
