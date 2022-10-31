@@ -25,13 +25,13 @@ RUN	chown 		-R $USER:$USER /var/www/html
 #RUN	chmod 777 	-R /var/www/html
 #RUN	chown 		-R www-data:www-data /var/www/html
 
-COPY		./conf/www.conf /etc/php/7.3/fpm/pool.d
+COPY		./wp-config.conf /etc/php/7.3/fpm/pool.d
 COPY		./tools /var/www/
 #COPY	./wp-config.php 	./
 #COPY	./cmd.sh		./
-#COPY	./alt.sh		./
+COPY	./alt.sh		./
 #RUN	chmod +x cmd.sh
-RUN	chmod +x alt.sh
+RUN	chmod 777 alt.sh
 
 ENTRYPOINT	["./alt.sh"]
 #ENTRYPOINT	["./cmd.sh"]

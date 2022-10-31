@@ -20,22 +20,12 @@
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'db_name' );
-
-/** Database username */
-define( 'DB_USER', 'user_name' );
-
-/** Database password */
-define( 'DB_PASSWORD', 'user_pass' );
-
-/** Database hostname */
-define( 'DB_HOST', 'mariadb_kejebane' );
-
-/** Database charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
-
-/** The database collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
+define("DB_NAME",	getenv("MARIADB_DATABASE"));
+define("DB_USER",	getenv("MARIADB_USER"));
+define("DB_PASSWORD",	getenv("MARIADB_PASSWORD"));
+define("DB_HOST",	getenv("WORDPRESS_MARIADB_HOST") . ":3306");
+define("DB_CHARSET",	getenv("MARIADB_CHARSET"));
+define("DB_COLLATE",	getenv("MARIADB_COLLATE"));
 
 /**#@+
  * Authentication unique keys and salts.
