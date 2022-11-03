@@ -1,39 +1,22 @@
-#FROM 	alpine:3.16
-FROM 	debian:buster-slim
+FROM	debian:buster
 
-#RUN	apk update && apk add curl
-#RUN	apk update && apk add wget
-#RUN	apk update && apk add php-fpm
-#RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN	apt-get update && apt-get -y install php7.3 php-mysqli php-fpm curl
 
-RUN	apt-get update && apt-get install -y curl
-RUN	apt-get update && apt-get install -y sendmail
-RUN	apt-get update && apt-get install -y wget
-RUN	apt-get update && apt-get install -y php-fpm
-RUN	apt-get update && apt-get install -y php-mysqli
-RUN	apt-get update && apt-get install -y php7.3
-RUN	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN	mkdir -p /var/www/site && mkdir -p /home/srcs
 
-EXPOSE	9000	
+COPY	./tools/wp-config.php /var/www/site
 
+COPY	./* /home/srcs/
 
-RUN	mkdir 		-p /var/www/html
-RUN	chown 		-R $USER:$USER /var/www/
-RUN	chown 		-R $USER:$USER /var/www/html
+RUN	cd /var/www/site ; \
+	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar ; \
+	chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp ; \
+	wp core download --allow-root ; 
 
-#RUN	adduser 	-u 82 -D -S -G www-data www-data
-#RUN	chmod 777 	-R /var/www/html
-#RUN	chown 		-R www-data:www-data /var/www/html
+COPY	./www.conf /etc/php/7.3/fpm/pool.d
 
-COPY		./wp-config.conf /etc/php/7.3/fpm/pool.d
-COPY		./tools /var/www/
-#COPY	./wp-config.php 	./
-#COPY	./cmd.sh		./
-COPY	./alt.sh		./
-#RUN	chmod +x cmd.sh
-RUN	chmod 777 alt.sh
+EXPOSE	9000
 
-ENTRYPOINT	["./alt.sh"]
-#ENTRYPOINT	["./cmd.sh"]
+ENTRYPOINT	[ "/home/srcs/alt.sh" ]
 
-CMD		["/usr/sbin/php-fpm7.3", "--nodaemonize"]
+CMD	["/usr/sbin/php-fpm7.3", "-F"]

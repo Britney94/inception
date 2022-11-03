@@ -1,28 +1,15 @@
-FROM 	debian:buster-slim
+FROM debian:buster
 
-RUN	apt-get update && apt-get install -y  mariadb-server
+RUN apt-get update && apt-get install -y mariadb-server
 
-#RUN			rm -f	/etc/mysql/my.cnf
+EXPOSE 3306
 
-VOLUME /home/data/volume_mariadb
+RUN mkdir -p /home/srcs
 
-#COPY		./db.sql		/var/www/
-COPY		default.conf		/etc/mysql/mariadb.conf.d/
-#COPY		default.conf		/etc/mysql/my.cnf
-#COPY		default.conf 		/etc/my.cnf
-#COPY		default.conf 		~/my.cnf
+COPY ./* /home/srcs/
 
-EXPOSE	3306
+COPY ./default.conf /etc/mysql/mariadb.conf.d/
 
+RUN service mysql start && mysql < /home/srcs/launch.sql ;
 
-RUN			mkdir -p /run/mysqld
-RUN			mkdir -p /var/lib/mysql
-RUN			chown -R mysql /var/lib/mysql
-RUN			chmod 777 /var/lib/mysql
-
-COPY			./launch.sh	./
-RUN			chmod 777	launch.sh
-RUN	service mysql start && mysql < /var/www/db.sql && rm -f /var/www/db.sql;
-ENTRYPOINT		["./launch.sh"]
-
-CMD 	["mysqld"]
+CMD ["mysqld"]
