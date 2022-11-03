@@ -5,7 +5,7 @@ services:
     container_name: mariadb_kejebane
     networks:
      - zeibel
-    ports:
+    expose:
      - "3306"
     volumes:
      - "/home/user42/volumes"
@@ -23,8 +23,8 @@ services:
     container_name: wp_kejebane
     networks:
      - zeibel
-    ports:
-     - "9000:9000"
+    expose:
+     - "9000"
     volumes:
      - "/home/user42/volumes"
     restart: always
@@ -47,7 +47,7 @@ services:
     volumes:
      - "/home/user42/volumes"
     depends_on:
-     - mariadb
+     - wordpress
 
       #-------------------------------------#
 

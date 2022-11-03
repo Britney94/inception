@@ -1,22 +1,16 @@
-#FROM 	alpine:3.16
 FROM 	debian:buster-slim
 
-#RUN	apk update && apk add  mariadb \
-#	mariadb-client
-
 RUN	apt-get update && apt-get install -y  mariadb-server
-RUN	apt-get update && apt-get install -y mariadb-client
 
-RUN			rm -f	/etc/mysql/my.cnf \
-				/etc/my.cnf \
-				~/my.cnf
+#RUN			rm -f	/etc/mysql/my.cnf
 
 VOLUME /home/data/volume_mariadb
 
 #COPY		./db.sql		/var/www/
-COPY		default.conf		/etc/mysql/my.cnf
-COPY		default.conf 		/etc/my.cnf
-COPY		default.conf 		~/my.cnf
+COPY		default.conf		/etc/mysql/mariadb.conf.d/
+#COPY		default.conf		/etc/mysql/my.cnf
+#COPY		default.conf 		/etc/my.cnf
+#COPY		default.conf 		~/my.cnf
 
 EXPOSE	3306
 
@@ -28,7 +22,7 @@ RUN			chmod 777 /var/lib/mysql
 
 COPY			./launch.sh	./
 RUN			chmod 777	launch.sh
-#RUN	service mysql start && mysql < /var/www/db.sql && rm -f /var/www/db.sql;
+RUN	service mysql start && mysql < /var/www/db.sql && rm -f /var/www/db.sql;
 ENTRYPOINT		["./launch.sh"]
 
-#CMD 	["mysqld"]
+CMD 	["mysqld"]
