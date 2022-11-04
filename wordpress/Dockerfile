@@ -11,9 +11,11 @@ COPY	./* /home/srcs/
 RUN	cd /var/www/site ; \
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar ; \
 	chmod +x wp-cli.phar && mv wp-cli.phar /usr/local/bin/wp ; \
+	chown -R /home/srcs/alt.sh ; \
+	chmod 777 /home/srcs/alt.sh ; \
 	wp core download --allow-root ; 
 
-COPY	./www.conf /etc/php/7.3/fpm/pool.d
+COPY	./wp-config.conf /etc/php/7.3/fpm/pool.d
 
 EXPOSE	9000
 
