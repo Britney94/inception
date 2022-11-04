@@ -1,10 +1,11 @@
 FROM	debian:buster
 
-RUN	apt-get update && apt-get -y install php7.3 php-mysqli php-fpm curl
+RUN	apt-get update && apt-get -y install php7.3 wget php-mysqli php-fpm curl
 
 RUN	mkdir -p /var/www/site && mkdir -p /home/srcs
 
-COPY	./tools/wp-config.php /var/www/site
+#COPY	./tools/wp-config.php /var/www/wp-config.php
+COPY	./wp-config.php /var/www/site
 
 COPY	./* /home/srcs/
 
@@ -15,7 +16,7 @@ RUN	cd /var/www/site ; \
 	chmod 777 /home/srcs/alt.sh ; \
 	wp core download --allow-root ; 
 
-COPY	./wp-config.conf /etc/php/7.3/fpm/pool.d
+COPY	./www.conf /etc/php/7.3/fpm/pool.d
 
 EXPOSE	9000
 

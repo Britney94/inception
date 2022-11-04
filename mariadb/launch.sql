@@ -1,7 +1,8 @@
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'root_mdp';
+
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root_pass';
 CREATE DATABASE IF NOT EXISTS wpData;
-CREATE USER IF NOT EXISTS 'inception'@'%' IDENTIFIED BY 'inception_mdp';
-CREATE USER IF NOT EXISTS 'kejebane'@'%' IDENTIFIED BY 'kejebane_mdp';
-GRANT ALL PRIVILEGES ON wpData.* TO 'kejebane'@'%';
-GRANT ALL PRIVILEGES ON *.* TO 'inception'@'%';
+CREATE USER IF NOT EXISTS 'kejebane'@'%' IDENTIFIED BY 'kejebane_pass';
+CREATE USER IF NOT EXISTS 'brian'@'%' IDENTIFIED BY 'brian_pass';
+GRANT ALL PRIVILEGES ON wpData.* TO 'brian'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'kejebane'@'%';
 FLUSH PRIVILEGES;
