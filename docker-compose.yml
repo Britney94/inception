@@ -2,50 +2,47 @@ version: '3.5'
 services:
   mariadb:
     build:  ./mariadb
-    container_name: mariadb_kejebane
+    image:  mariadb
+    container_name: mariadb
     networks:
      - zeibel
     expose:
      - "3306"
     volumes:
-     - "/home/user42/volumes"
+     - dbData:/var/lib/mysql
     env_file: ./.env
     restart: always
 
-
       #-------------------------------------#
-
 
   wordpress:
     depends_on:
      - mariadb
     build: ./wordpress
-    container_name: wp_kejebane
+    image:  wordpress
+    container_name: wordpress
     networks:
      - zeibel
     expose:
      - "9000"
     volumes:
-     - "/home/user42/volumes"
+     - dbData:/var/lib/mysql
     restart: always
     env_file: ./.env
 
-
       #-------------------------------------#
-
 
   nginx:
     build:  ./nginx
-    container_name: nginx_kejebane
+    container_name: nginx
+    image:  nginx
     networks:
      - zeibel
     ports:
      - "443:443"
-    restart: unless-stopped
-    tty: true
-    env_file: ./.env
+    restart: always
     volumes:
-     - "/home/user42/volumes"
+     - wpData:/var/www/site
     depends_on:
      - wordpress
 
@@ -53,26 +50,20 @@ services:
 
 networks:
   zeibel:
-    external: true
-    name: zeibel
     driver: bridge
         
 volumes:
-  wp:
+  wpData:
     driver: local
-    name: wp
+    name: wpData
     driver_opts:
       type: none
       o: bind
       device: /home/user42/data/wordpress
-  db:
+  dbData:
     driver: local
-    name: db
+    name: dbData
     driver_opts:
       type: none
       o: bind
       device: /home/user42/data/mariadb
-
-      #volumes:
-      #db_data: {}
-
