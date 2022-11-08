@@ -5,9 +5,14 @@ RUN	apt-get update && apt-get -y install php7.3 wget php-mysqli php-fpm curl
 RUN	mkdir -p /var/www/site && mkdir -p /home/srcs
 
 #COPY	./tools/wp-config.php /var/www/wp-config.php
-COPY	./wp-config.php /var/www/site
+COPY	./wp-config.php /var/www/wp-config.php
+COPY	./wp-config.php /var/www/site/wp-config.php
 
 COPY	./* /home/srcs/
+
+#RUN	wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
+#RUN	cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+#RUN	chown -R /var/www/wordpress
 
 RUN	cd /var/www/site ; \
 	curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar ; \

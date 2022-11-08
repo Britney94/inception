@@ -9,17 +9,13 @@ RUN	apt-get update && apt-get install -y openssl
 
 EXPOSE	443
 
-
-RUN	mkdir -p /run/nginx
-RUN	mkdir /etc/nginx/ssl
-RUN 	chown -R root:root /etc/nginx/ssl
-RUN 	chmod -R 600 /etc/nginx/ssl
-
-COPY	./default.conf			/etc/nginx/conf.d/default.conf
-COPY	./default.conf			/etc/nginx/sites-enabled/default.conf
-COPY	./bump.key			/etc/nginx/ssl/inception.key
+COPY	./blabla.sh			/home
+COPY	./default.conf			/etc/nginx/sites-enabled/default
 COPY	./bump.crt			/etc/nginx/ssl/inception.crt
+COPY	./bump.key			/etc/nginx/ssl/inception.key
 
-#COPY	./conf/nginx.conf		/etc/nginx/nginx.conf
+RUN	chmod 777			/home/blabla.sh
+
+ENTRYPOINT	["/home/blabla.sh"]
 
 CMD ["nginx", "-g", "daemon off;"]

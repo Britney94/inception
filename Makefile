@@ -2,9 +2,10 @@ NAME=inception
 
 all:
 	docker-compose build
-	docker-compose up -d
+	docker-compose -f docker-compose.yml up
+	#docker-compose up -d
 
-	#Build containers and run them in background
+	#Build containers and run them in foreground
 
 down:
 	docker-compose down
@@ -17,11 +18,11 @@ rm:
 	#Remove all volumes of containers
 
 logdb:
-	docker logs --tail 50 --follow --timestamps mariadb_kejebane
+	docker logs --tail 50 --follow --timestamps mariadb
 logng:
-	docker logs --tail 50 --follow --timestamps nginx_kejebane
+	docker logs --tail 50 --follow --timestamps nginx
 logwp:
-	docker logs --tail 50 --follow --timestamps wp_kejebane
+	docker logs --tail 50 --follow --timestamps wordpress
 
 	#Display the error message that were not displayed because containers
 	#were running in background

@@ -1,5 +1,13 @@
 #!/bin/bash
 
+sleep 10
+
+wp config create	--allow-root \
+			--dbname=inception \
+			--dbuser=kejebane \
+			--dbpass=kejebane_pass \
+			--dbhost=mariadb:3306 --path='/var/www/wordpress'
+
 mkdir -p /run/php/;
 touch /run/php/php7.3-fpm.pid;
 

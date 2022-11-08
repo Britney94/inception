@@ -3,7 +3,7 @@
 define( 'DB_NAME', 'inception' );
 define( 'DB_USER', 'kejebane' );
 define( 'DB_PASSWORD', 'kejebane_pass' );
-define( 'DB_HOST', 'mariadb_kejebane' );
+define( 'DB_HOST', 'mariadb' );
 define( 'DB_CHARSET', 'utf8' );
 define( 'DB_COLLATE', '' );
 
