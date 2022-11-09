@@ -1,41 +1,59 @@
-NAME=inception
+# Variables
 
-all:
-	docker-compose build
-	docker-compose -f docker-compose.yml up
-	#docker-compose up -d
+NAME			= Inception
+SRCS 			= ./srcs
+DOCKER			= sudo docker
+COMPOSE 		= cd srcs/ && sudo docker-compose
+DATA_PATH 		= /home/kejebane/data
 
-	#Build containers and run them in foreground
+# Color variables
 
-down:
-	docker-compose down
+RED				= \033[0;31m
+PURPLE			= \033[0;35m
+NC				= \033[0m		# No Color
 
-	#Stop all containers and remove their volumes
-rm:
-	docker volume rm $(docker volume ls -qf dangling=true | xargs)
-	docker volume rm $(docker volume ls -q)
+# Rules
 
-	#Remove all volumes of containers
+all		:	build
+			@sudo mkdir -p $(DATA_PATH)
+			@sudo mkdir -p $(DATA_PATH)/wordpress
+			@sudo mkdir -p $(DATA_PATH)/database
+			@sudo chmod 777 /etc/hosts
+			@sudo echo "127.0.0.1 kejebane.42.fr" >> /etc/hosts
+			@sudo echo "127.0.0.1 www.kejebane.42.fr" >> /etc/hosts
+			@$(COMPOSE) up -d
+			@echo "${PURPLE}🌸 Build complete ${NC}"
 
-logdb:
-	docker logs --tail 50 --follow --timestamps mariadb
-logng:
-	docker logs --tail 50 --follow --timestamps nginx
-logwp:
-	docker logs --tail 50 --follow --timestamps wordpress
+build	:
+			@$(COMPOSE) build
 
-	#Display the error message that were not displayed because containers
-	#were running in background
+up:
+			@${COMPOSE} up -d 
 
-issue:
-	docker stop $(docker ps -a -q); docker rm $(docker ps -a -q); docker volume rm $(docker volume ls -qf dangling=true)
-	docker network rm $(docker network ls -q)
-	sudo lsof -nP | grep LISTEN
-	sudo kill -9 1548
-	
-	#Use if port 443 is occupied by another processor
+check:
+			@echo "${PURPLE}🌸 Docker services :${NC}"
+			@cd $(SRCS) && sudo docker-compose ps 
+			@echo ""
+			@echo "${PURPLE}🌸 Docker network :${NC}"
+			@cd $(SRCS) && sudo docker network ls
+			@echo ""
+			@echo "${PURPLE}🌸 Docker volume :${NC}"
+			@cd $(SRCS) && sudo docker volume ls
 
-prune:
-	docker system prune
+down	:
+			@$(COMPOSE) down
 
-	#Remove all dangling image, volume and network
+clean	:
+			@$(COMPOSE) down -v --rmi all --remove-orphans
+
+fclean	:	clean
+			@$(DOCKER) system prune --volumes --all --force
+			@sudo rm -rf $(DATA_PATH)
+			@$(DOCKER) network prune --force
+			@echo docker volume rm $(docker volume ls -q)
+			@$(DOCKER) image prune --force
+			@echo "${RED}⚠️ $(NAME) is delete.${NC}"
+
+re		:	fclean all
+
+.PHONY : all build up check down clean fclean re
