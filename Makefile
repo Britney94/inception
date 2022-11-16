@@ -30,6 +30,29 @@ build	:
 up:
 			@${COMPOSE} up -d 
 
+logdb:
+	docker logs --tail 50 --follow --timestamps mariadb
+logng:
+	docker logs --tail 50 --follow --timestamps nginx
+logwp:
+	docker logs --tail 50 --follow --timestamps wordpress
+
+    #Display the error message that were not displayed because containers
+    #were running in background
+
+issue:
+	docker stop $(docker ps -a -q)
+	docker rm $(docker ps -a -q)
+	docker volume rm $(docker volume ls -qf dangling=true)
+	docker network rm $(docker network ls -q) 	# ->This one can be called alone, when lazy
+	sudo lsof -nP | grep LISTEN			# ->Display the port usage if problem occur
+	sudo kill -9 1548				# ->Kill the process that use our problematic port
+							#replacing 1548 by the PID of said process
+
+    #Use if port 443 is occupied by another processor for example,
+    #or if volume / container have issue with starting maneuver
+
+
 check:
 			@echo "${PURPLE}🌸 Docker services :${NC}"
 			@cd $(SRCS) && sudo docker-compose ps 
